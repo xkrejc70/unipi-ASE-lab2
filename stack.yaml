@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  math-service:
+    image: jacopomassa97/math_py:latest
+    deploy:
+      replicas: 2
+  
+  string-service:
+    image: jacopomassa97/string_rust:latest
+    deploy:
+      replicas: 2
+
+  gateway:
+    image: jacopomassa97/gateway:latest
+    ports:
+      - mode: host
+        target: 5000
+        published: 5001
+    depends_on:
+      - math-service
+      - string-service
